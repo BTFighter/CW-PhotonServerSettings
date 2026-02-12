@@ -2,7 +2,7 @@
 
 #### Special Thanks
 **1A3Dev** for [REPO-PhotonServerSettings](https://github.com/1A3Dev/REPO-PhotonServerSettings)  
-**Kirigiri's** for [ContentWarningOffline](https://github.com/KirigiriX/ContentWarningOffline)
+**Kirigiri's** for edited Assembly-CSharp.dll and [ContentWarningOffline](https://github.com/KirigiriX/ContentWarningOffline)
 
 Without these mods, this wouldn't be possible!
 
