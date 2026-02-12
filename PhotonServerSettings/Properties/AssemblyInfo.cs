@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ContentWarningOffline")]
-[assembly: AssemblyDescription("Make Content Warning run offline")]
+[assembly: AssemblyTitle("CW-PhotonServerSettings")]
+[assembly: AssemblyDescription("Override photon settings")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Kirigiri")]
-[assembly: AssemblyProduct("ContentWarningOffline")]
-[assembly: AssemblyCopyright("Kirigiri ©  2025")]
+[assembly: AssemblyCompany("PhotonLAN")]
+[assembly: AssemblyProduct("PhotonLANCW")]
+[assembly: AssemblyCopyright("Kirigiri & 1A3Dev © 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
