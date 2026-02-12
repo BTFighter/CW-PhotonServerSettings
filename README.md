@@ -14,6 +14,6 @@ This mod for Content Warning allows you to override a few values to allow using 
 - Photon Connection Protocol
 - Photon Server Address, Port & Version
 
-#### PhotonServerSettings also exist for these games:
+#### Other Created Forks of PhotonServerSettings:
 [![R.E.P.O](https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3241660/28c1bb423e9af8646047e9e881c3a0ac121647f6/capsule_231x87.jpg)](https://github.com/BTFighter/REPO-PhotonServerSettings)
 [![PEAK](https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3527290/1844964d7a353e50eb3cc979ea922729d8c1b0ad/capsule_231x87.jpg)](https://github.com/BTFighter/PEAK-PhotonServerSettings)
