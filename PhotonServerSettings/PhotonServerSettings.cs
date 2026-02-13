@@ -14,6 +14,7 @@ namespace ContentWarningOffline
     [BepInPlugin("photonLAN.contentwarning.photonserversettings", "CW-PhotonServerSettings", "1.0.0.0")]
     public class PhotonServerSettings : BaseUnityPlugin
     {
+        internal static ConfigEntry<bool> PluginEnabled;
         internal static ConfigEntry<string> PhotonServerAddress;
         internal static ConfigEntry<int> PhotonServerPort;
         internal static ConfigEntry<int> PhotonServerVersion;
@@ -29,6 +30,8 @@ namespace ContentWarningOffline
             Logger.LogInfo("[CW-PhotonServerSettings] Also based on ContentWarningOffline by Kirigiri, made with <3 \nhttps://discord.gg/TBs8Te5nwn");
 
             // Initialize config entries
+            PluginEnabled = Config.Bind("General", "Enable Plugin", true, new ConfigDescription("Enable or disable the plugin. If disabled, official Photon servers will be used."));
+            
             PhotonAppIdRealtime = Config.Bind("Photon", "AppId Realtime", "", new ConfigDescription("Photon Realtime App ID"));
             PhotonAppIdVoice = Config.Bind("Photon", "AppId Voice", "", new ConfigDescription("Photon Voice App ID"));
             
@@ -49,17 +52,20 @@ namespace ContentWarningOffline
             [HarmonyPrefix]
             public static bool Prefix(MainMenuHandler __instance)
             {
-                // Check if server address is blank or contains any letters (not a valid IP address)
-                bool isServerAddressInvalid = string.IsNullOrEmpty(PhotonServerAddress.Value) || PhotonServerAddress.Value.Any(char.IsLetter);
+                // Check if plugin is disabled
+                if (!PluginEnabled.Value)
+                {
+                    Debug.Log("[CW-PhotonServerSettings] Plugin is disabled, using official Photon servers");
+                    return true; // Continue with original method
+                }
                 
-                // If server address is invalid, enter offline mode
-                if (isServerAddressInvalid)
+                // Check if both server address AND AppId Realtime are blank, then enter offline mode
+                bool shouldEnterOfflineMode = string.IsNullOrEmpty(PhotonServerAddress.Value) && string.IsNullOrEmpty(PhotonAppIdRealtime.Value);
+                
+                if (shouldEnterOfflineMode)
                 {
                     PhotonNetwork.OfflineMode = true;
-                    if (string.IsNullOrEmpty(PhotonServerAddress.Value))
-                        Debug.Log("[CW-PhotonServerSettings] Server address is blank, entering offline mode");
-                    else
-                        Debug.Log("[CW-PhotonServerSettings] Server address contains letters, entering offline mode");
+                    Debug.Log("[CW-PhotonServerSettings] Both server address and AppId Realtime are blank, entering offline mode");
                     return false;
                 }
                 
@@ -121,6 +127,13 @@ namespace ContentWarningOffline
             [HarmonyPrefix]
             public static bool Prefix(CheckVersionHandler __instance, ref IEnumerator __result)
             {
+                // Check if plugin is disabled
+                if (!PluginEnabled.Value)
+                {
+                    Debug.Log("[CW-PhotonServerSettings] Plugin is disabled, skipping CheckVersionCoroutine patch");
+                    return true; // Continue with original method
+                }
+                
                 __result = ForcedCoroutine(__instance);
                 return false;
             }
@@ -145,25 +158,31 @@ namespace ContentWarningOffline
             }
         }
 
-        [HarmonyPatch(typeof(MainMenuHandler), nameof(MainMenuHandler.JoinRandom))]
-        public class JoinRandomPatch
-        {
-            [HarmonyPrefix]
-            public static bool Prefix()
-            {
+        //[HarmonyPatch(typeof(MainMenuHandler), nameof(MainMenuHandler.JoinRandom))]
+        //public class JoinRandomPatch
+        //{
+        //    [HarmonyPrefix]
+        //    public static bool Prefix()
+        //    {
+        //        // Check if plugin is disabled
+        //        if (!PluginEnabled.Value)
+        //        {
+        //            Debug.Log("[CW-PhotonServerSettings] Plugin is disabled, allowing JoinRandom to function normally");
+        //            return true; // Continue with original method
+        //        }
+                
+        //        Modal.Show(
+        //            "<color=purple>This cannot be used in this mod</color>",
+        //            "This feature is not available in the current version of the application.",
+        //            new ModalOption[]
+        //            {
+        //        new ModalOption("OK", null)
+        //            },
+        //            () => { }
+        //        );
 
-                Modal.Show(
-                    "<color=purple>This cannot be used in this mod</color>",
-                    "This feature is not available in the current version of the application.",
-                    new ModalOption[]
-                    {
-                new ModalOption("OK", null)
-                    },
-                    () => { }
-                );
-
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
     }
 }
