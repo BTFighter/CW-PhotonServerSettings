@@ -157,32 +157,5 @@ namespace ContentWarningOffline
                 yield break;
             }
         }
-
-        //[HarmonyPatch(typeof(MainMenuHandler), nameof(MainMenuHandler.JoinRandom))]
-        //public class JoinRandomPatch
-        //{
-        //    [HarmonyPrefix]
-        //    public static bool Prefix()
-        //    {
-        //        // Check if plugin is disabled
-        //        if (!PluginEnabled.Value)
-        //        {
-        //            Debug.Log("[CW-PhotonServerSettings] Plugin is disabled, allowing JoinRandom to function normally");
-        //            return true; // Continue with original method
-        //        }
-                
-        //        Modal.Show(
-        //            "<color=purple>This cannot be used in this mod</color>",
-        //            "This feature is not available in the current version of the application.",
-        //            new ModalOption[]
-        //            {
-        //        new ModalOption("OK", null)
-        //            },
-        //            () => { }
-        //        );
-
-        //        return false;
-        //    }
-        //}
     }
 }
